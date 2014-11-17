@@ -1,24 +1,30 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = Worker -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => Worker %></h1>
+</div>
 
-<p>
-  <strong>First name:</strong>
-  <%= @worker.first_name %>
-</p>
+<div class="fieldset">
+  <dl>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:first_name) %></dt>
+      <dd><pre class="prettyprint"><%= @worker.first_name %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:photo_url) %></dt>
+      <dd><pre class="prettyprint"><%= @worker.photo_url %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:last_name) %></dt>
+      <dd><pre class="prettyprint"><%= @worker.last_name %></pre></dd>
+      <dt class="label label-default"><%= model_class.human_attribute_name(:notes) %></dt>
+      <dd><pre class="prettyprint"><%= @worker.notes %></pre></dd>
+  </dl>
+</div>
 
-<p>
-  <strong>Photo url:</strong>
-  <%= @worker.photo_url %>
-</p>
+<div class="form-group">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              workers_path, :class => 'btn btn-default'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_worker_path(@worker), :class => 'btn btn-default' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              worker_path(@worker),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+</div>
 
-<p>
-  <strong>Last name:</strong>
-  <%= @worker.last_name %>
-</p>
-
-<p>
-  <strong>Notes:</strong>
-  <%= @worker.notes %>
-</p>
-
-<%= link_to 'Edit', edit_worker_path(@worker) %> |
-<%= link_to 'Back', workers_path %>
