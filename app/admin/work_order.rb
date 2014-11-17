@@ -1,4 +1,5 @@
 ActiveAdmin.register WorkOrder do
+  permit_params :status
 
 
   # See permitted parameters documentation:
