@@ -1,6 +1,5 @@
-<h1>Editing product_configuration</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Show', @product_configuration %> |
-<%= link_to 'Back', product_configurations_path %>
+<%- model_class = ProductConfiguration -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => ProductConfiguration %></h1>
+</div>
+<%= render :partial => 'form' %>

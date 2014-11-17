@@ -1,35 +1,44 @@
-<h1>Listing product_configurations</h1>
-
-<table>
+<%- model_class = ProductConfiguration -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => ProductConfiguration %></h1>
+</div>
+<table class="table table-striped">
   <thead>
     <tr>
-      <th>Color</th>
-      <th>Size</th>
-      <th>Cogs</th>
-      <th>Product</th>
-      <th>Sku</th>
-      <th>Image url</th>
-      <th colspan="3"></th>
+      <th>ID</th>
+      <th><%= model_class.human_attribute_name(:color) %></th>
+      <th><%= model_class.human_attribute_name(:size) %></th>
+      <th><%= model_class.human_attribute_name(:cogs) %></th>
+      <th><%= model_class.human_attribute_name(:sku) %></th>
+      <th><%= model_class.human_attribute_name(:image_url) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
-
   <tbody>
     <% @product_configurations.each do |product_configuration| %>
       <tr>
+        <td><%= product_configuration.id %></td>
         <td><%= product_configuration.color %></td>
         <td><%= product_configuration.size %></td>
         <td><%= product_configuration.cogs %></td>
-        <td><%= product_configuration.product %></td>
         <td><%= product_configuration.sku %></td>
         <td><%= product_configuration.image_url %></td>
-        <td><%= link_to 'Show', product_configuration %></td>
-        <td><%= link_to 'Edit', edit_product_configuration_path(product_configuration) %></td>
-        <td><%= link_to 'Destroy', product_configuration, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%=l product_configuration.created_at, format: :long %></td>
+        <td>
+          <%= link_to product_configuration_path(product_configuration), :class => 'btn btn-xs', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
+            <%= glyph 'info-sign' %>
+            <%= glyph 'pencil' %>
+          <%- end -%>
+          <%= link_to product_configuration_path(product_configuration), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs', :title => "#{ t('.destroy', :default => t('helpers.links.destroy')) }" do %>
+            <%= glyph 'remove' %>
+          <%- end -%>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Product configuration', new_product_configuration_path %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_product_configuration_path,
+            :class => 'btn btn-primary' %>
