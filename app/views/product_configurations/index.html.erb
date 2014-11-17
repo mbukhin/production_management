@@ -1,0 +1,35 @@
+<h1>Listing product_configurations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Color</th>
+      <th>Size</th>
+      <th>Cogs</th>
+      <th>Product</th>
+      <th>Sku</th>
+      <th>Image url</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @product_configurations.each do |product_configuration| %>
+      <tr>
+        <td><%= product_configuration.color %></td>
+        <td><%= product_configuration.size %></td>
+        <td><%= product_configuration.cogs %></td>
+        <td><%= product_configuration.product %></td>
+        <td><%= product_configuration.sku %></td>
+        <td><%= product_configuration.image_url %></td>
+        <td><%= link_to 'Show', product_configuration %></td>
+        <td><%= link_to 'Edit', edit_product_configuration_path(product_configuration) %></td>
+        <td><%= link_to 'Destroy', product_configuration, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Product configuration', new_product_configuration_path %>
