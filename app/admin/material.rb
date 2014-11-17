@@ -1,4 +1,5 @@
 ActiveAdmin.register Material do
+  permit_params :name, :unit, :internal_name
 
 
   # See permitted parameters documentation:
