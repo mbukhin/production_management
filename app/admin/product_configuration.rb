@@ -1,4 +1,5 @@
 ActiveAdmin.register ProductConfiguration do
+  permit_params :color, :size, :cogs, :sku, :image_url
 
 
   # See permitted parameters documentation:
