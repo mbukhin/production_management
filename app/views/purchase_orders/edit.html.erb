@@ -1,6 +1,5 @@
-<h1>Editing purchase_order</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Show', @purchase_order %> |
-<%= link_to 'Back', purchase_orders_path %>
+<%- model_class = PurchaseOrder -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => PurchaseOrder %></h1>
+</div>
+<%= render :partial => 'form' %>
