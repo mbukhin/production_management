@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  color: MyString
+  size: MyString
+  cogs: 1.5
+  product_id: 
+  sku: MyString
+  image_url: MyString
+
+two:
+  color: MyString
+  size: MyString
+  cogs: 1.5
+  product_id: 
+  sku: MyString
+  image_url: MyString
