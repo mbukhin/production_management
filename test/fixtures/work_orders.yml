@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  worker_id: 
+  status: MyString
+  product_configuration_id: 
+  purchase_order_id: 
+
+two:
+  worker_id: 
+  status: MyString
+  product_configuration_id: 
+  purchase_order_id: 
