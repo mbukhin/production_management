@@ -1,6 +1,5 @@
-<h1>Editing work_order</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Show', @work_order %> |
-<%= link_to 'Back', work_orders_path %>
+<%- model_class = WorkOrder -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => WorkOrder %></h1>
+</div>
+<%= render :partial => 'form' %>
