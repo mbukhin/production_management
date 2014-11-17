@@ -1,4 +1,5 @@
 ActiveAdmin.register Worker do
+  permit_params :first_name, :photo_url, :last_name, :notes
 
 
   # See permitted parameters documentation:
