@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :workers
+
   resources :work_orders
 
   devise_for :admin_users, ActiveAdmin::Devise.config
