@@ -1,4 +1,5 @@
 ActiveAdmin.register PurchaseOrder do
+  permit_params :name, :status
 
 
   # See permitted parameters documentation:
