@@ -27,7 +27,7 @@ end
 
   index do
     column :name
-    column :puchase_order_status
+    column :purchase_order_status
     actions
   end
 

@@ -51,3 +51,5 @@ gem 'bootstrap-sass', github: 'twbs/bootstrap-sass'
 gem 'bootstrap-sass-extras'
 gem 'validates_formatting_of'
 gem 'tzinfo-data'
+
+gem 'rails-erd', github: 'paulwittmann/rails-erd', branch: 'mavericks'

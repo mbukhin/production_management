@@ -3,4 +3,5 @@ class ProductConfiguration < ActiveRecord::Base
   has_many :required_materials
   belongs_to :style_color
   belongs_to :style_size
+  has_many   :work_orders
 end

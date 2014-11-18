@@ -21,8 +21,19 @@ ActiveAdmin.register Product do
         row :image do
           image_tag(product.image_url, size: "100x100")
         end
+        panel "Product Configurations" do
+            ul do
+             product.product_configurations.each do |rm|
+               li "#{rm.name}"
+             end
+           end       
+        end  
+
       end
     end
+
+
+
 
 
 

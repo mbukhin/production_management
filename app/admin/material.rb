@@ -16,7 +16,6 @@ end
   index do
     column :name
     column :unit
-    column :internal_name
     actions
   end
 

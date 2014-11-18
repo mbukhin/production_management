@@ -22,6 +22,21 @@ ActiveAdmin.register Worker do
         row :image do
           image_tag(worker.photo_url, size: "100x100")
         end
+        panel "Work Orders" do
+            ul do
+             worker.work_orders.each do |wo|
+              columns do
+                column do
+                  image_tag(wo.product_configuration.product.image_url, size: "100x100")
+                end
+                column do
+                  "#{wo.product_configuration.name} - #{wo.work_order_status.name}"
+                end
+
+              end 
+             end
+           end       
+        end  
         row :notes
       end
     end  
@@ -30,7 +45,7 @@ ActiveAdmin.register Worker do
   index do
     column :name
     column "Image" do |worker|
-      image_tag worker.photo_url, class: 'my_image_size'
+      image_tag worker.photo_url, size: "100x100"
     end
     actions
   end  

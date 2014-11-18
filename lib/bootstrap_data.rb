@@ -28,7 +28,7 @@ class BootstrapData
   	ws = spreadsheet.worksheets[2]
 	for row in 2..ws.num_rows
 	  WorkOrderStatus.where(name: ws[row,1]).first_or_create
-	  PurchaseOrderStatus.where(name: ws[row,1]).first_or_create
+	  PurchaseOrderStatus.where(name: ws[row,2]).first_or_create
 	end
 
   	# next, create the product configurations
@@ -73,6 +73,9 @@ class BootstrapData
 
   	# ok time for materials
   	Material.destroy_all
+  	RequiredMaterial.destroy_all
+  	MaterialChange.destroy_all
+
   	ws = spreadsheet.worksheets[3]
 	for row in 2..ws.num_rows
 	  m = Material.where(name: ws[row,1]).first_or_create	 
@@ -93,10 +96,84 @@ class BootstrapData
     # --------------
     # This is for the material to product configuration mapping as well as COGS.  Fuck it for now, need to talk to Didi
 
+    ProductConfiguration.all.each { |pc|
+
+    	# assign basic colors
+    	sku_color = pc.sku.split('-')[1]
+    	colors = []
+    	m = Material.find_by_sku_abbreviation(sku_color)
+    	colors << m if m
+    	# ok maybe it's a triple color
+    	case sku
+		  when "NPB"
+		  	colors = [ Material.fnd_by_sku_abbreviation("NUT"), Material.fnd_by_sku_abbreviation("PER"), Material.fnd_by_sku_abbreviation("BLU") ]
+		  when "NBZ"
+		  	colors = [ Material.fnd_by_sku_abbreviation("NUT"), Material.fnd_by_sku_abbreviation("ZEP"), Material.fnd_by_sku_abbreviation("BLU") ]
+		  when "ZGN"
+		  	colors = [ Material.fnd_by_sku_abbreviation("NUT"), Material.fnd_by_sku_abbreviation("ZEP"), Material.fnd_by_sku_abbreviation("GRA") ]
+		end
+
+    	if colors.length > 0
+    	  colors.each { |c|	
+    	    amount = (rand * (2) + 1).round(2)
+    	    rq = RequiredMaterial.new
+    	    rq.name = m.name
+    	    rq.product_configuration = pc
+    	    rq.amount = amount
+    	    rq.units = 'grams'
+    	    rq.material = m 
+    	    rq.save
+    	  }
+    	end
+
+
+    	# add some buttons
+    	button_records = Material.where(unit: 'count')
+    	m= button_records.offset(rand(button_records.count)).first
+    	rq = RequiredMaterial.new
+    	rq.name = m.name
+    	rq.product_configuration = pc
+    	rq.amount = rand(4)
+    	rq.units = 'count'
+    	rq.material = m 
+    	rq.save
+
+    }
+
+
 
     # ---------------
     # FAKE FAKE FAKE
 
+
+
+    # Workers
+    Worker.destroy_all
+    ws = spreadsheet.worksheets[5]
+	for row in 2..ws.num_rows
+	  w = Worker.new
+	  w.name = ws[row,1]
+	  w.cell_phone = ws[row,2]
+	  w.photo_url = ws[row,3]
+	  w.save	
+	end
+
+
+	# dummy po
+	PurchaseOrder.destroy_all
+	po = PurchaseOrder.create(name: 'F/W15 PO', purchase_order_status_id: PurchaseOrderStatus.first.id)
+    ws = spreadsheet.worksheets[6]
+	for row in 2..ws.num_rows
+	    if pc = ProductConfiguration.find_by_sku(ws[row,1])
+	      w = WorkOrder.new
+	      w.work_order_status_id = WorkOrderStatus.find_by_name('Entered').id
+	      w.product_configuration_id = pc.id
+	      w.purchase_order_id = po.id
+          w.save	
+		else
+	      puts ws[row,1]
+	    end
+	end
 
   	puts product_sku_translation
 

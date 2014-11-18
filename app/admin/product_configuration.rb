@@ -30,6 +30,24 @@ form do |f|
 
 end  
 
+    show do |pc|
+      attributes_table do
+        row :name
+        row :style_size
+        row :style_color
+        row :cogs
+        row :sku
+        row :weight
+        row :product
+        panel "Required Materials" do
+            ul do
+             pc.required_materials.each do |rm|
+               li "#{rm.material.name} #{rm.amount} #{rm.units}"
+             end
+           end       
+        end  
+      end
+    end
 
   index do
     column :name   
