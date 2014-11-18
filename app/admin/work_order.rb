@@ -1,5 +1,5 @@
 ActiveAdmin.register WorkOrder do
-  permit_params :status
+  permit_params :work_order_status_id, :worker_id, :product_configuration_id, :purchase_order_id
 
 
   # See permitted parameters documentation:
@@ -14,6 +14,26 @@ ActiveAdmin.register WorkOrder do
   #   permitted << :other if resource.something?
   #   permitted
   # end
+
+form do |f|
+  f.inputs do
+    f.input :worker
+    f.input :product_configuration
+    f.input :purchase_order
+    f.input :work_order_status
+    f.actions
+  end
+
+end    
+
+  index do
+    column :purchase_order
+    column :product_configuration
+    column :worker
+    column :work_order_status
+
+    actions
+  end
 
 
 end

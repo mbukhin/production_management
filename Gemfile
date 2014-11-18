@@ -40,6 +40,8 @@ gem 'spring',        group: :development
 
 gem 'bundler'
 
+gem 'google_drive'
+
 gem 'simple_form'
 gem 'devise', github: 'plataformatec/devise'
 gem 'omniauth'

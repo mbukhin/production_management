@@ -1,5 +1,5 @@
 ActiveAdmin.register PurchaseOrder do
-  permit_params :name, :status
+  permit_params :name, :purchase_order_status_id
 
 
   # See permitted parameters documentation:
@@ -15,5 +15,20 @@ ActiveAdmin.register PurchaseOrder do
   #   permitted
   # end
 
+
+form do |f|
+  f.inputs do
+    f.input :name
+    f.input :purchase_order_status
+    f.actions
+  end
+
+end    
+
+  index do
+    column :name
+    column :puchase_order_status
+    actions
+  end
 
 end

@@ -1,9 +1,9 @@
 class CreateWorkers < ActiveRecord::Migration
   def change
     create_table :workers do |t|
-      t.string :first_name
+      t.string :name
       t.string :photo_url
-      t.string :last_name
+      t.string :cell_phone
       t.text :notes
 
       t.timestamps

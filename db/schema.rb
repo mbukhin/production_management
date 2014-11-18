@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141117223105) do
+ActiveRecord::Schema.define(version: 20141118162000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,9 +50,12 @@ ActiveRecord::Schema.define(version: 20141117223105) do
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "material_changes", force: true do |t|
+    t.string   "name"
     t.float    "amount"
     t.text     "notes"
+    t.string   "units"
     t.integer  "material_id"
+    t.boolean  "disable"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -62,25 +65,36 @@ ActiveRecord::Schema.define(version: 20141117223105) do
   create_table "materials", force: true do |t|
     t.string   "name"
     t.string   "unit"
+    t.string   "sku_abbreviation"
     t.string   "internal_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "product_configurations", force: true do |t|
-    t.string   "color"
-    t.string   "size"
+    t.string   "name"
     t.float    "cogs"
+    t.float    "weight"
     t.integer  "product_id"
+    t.integer  "style_size_id"
+    t.integer  "style_color_id"
     t.string   "sku"
-    t.string   "image_url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "product_configurations", ["product_id"], name: "index_product_configurations_on_product_id", using: :btree
+  add_index "product_configurations", ["style_color_id"], name: "index_product_configurations_on_style_color_id", using: :btree
+  add_index "product_configurations", ["style_size_id"], name: "index_product_configurations_on_style_size_id", using: :btree
 
   create_table "products", force: true do |t|
+    t.string   "name"
+    t.string   "image_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "purchase_order_statuses", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -88,14 +102,16 @@ ActiveRecord::Schema.define(version: 20141117223105) do
 
   create_table "purchase_orders", force: true do |t|
     t.string   "name"
-    t.string   "status"
+    t.integer  "purchase_order_status_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "required_materials", force: true do |t|
+    t.string   "name"
     t.integer  "product_configuration_id"
     t.float    "amount"
+    t.string   "units"
     t.integer  "material_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -103,6 +119,18 @@ ActiveRecord::Schema.define(version: 20141117223105) do
 
   add_index "required_materials", ["material_id"], name: "index_required_materials_on_material_id", using: :btree
   add_index "required_materials", ["product_configuration_id"], name: "index_required_materials_on_product_configuration_id", using: :btree
+
+  create_table "style_colors", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "style_sizes", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -124,18 +152,15 @@ ActiveRecord::Schema.define(version: 20141117223105) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
-  create_table "work_order_status_histories", force: true do |t|
-    t.integer  "work_order_id"
-    t.string   "status"
+  create_table "work_order_statuses", force: true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "work_order_status_histories", ["work_order_id"], name: "index_work_order_status_histories_on_work_order_id", using: :btree
-
   create_table "work_orders", force: true do |t|
     t.integer  "worker_id"
-    t.string   "status"
+    t.integer  "work_order_status_id"
     t.integer  "product_configuration_id"
     t.integer  "purchase_order_id"
     t.datetime "created_at"
@@ -147,9 +172,9 @@ ActiveRecord::Schema.define(version: 20141117223105) do
   add_index "work_orders", ["worker_id"], name: "index_work_orders_on_worker_id", using: :btree
 
   create_table "workers", force: true do |t|
-    t.string   "first_name"
+    t.string   "name"
     t.string   "photo_url"
-    t.string   "last_name"
+    t.string   "cell_phone"
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"

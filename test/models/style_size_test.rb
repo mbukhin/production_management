@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class WorkOrderStatusHistoryTest < ActiveSupport::TestCase
+class StyleSizeTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
