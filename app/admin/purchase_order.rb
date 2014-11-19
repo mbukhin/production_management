@@ -22,8 +22,40 @@ form do |f|
     f.input :purchase_order_status
     f.actions
   end
-
 end    
+
+  show do |po|
+    attributes_table do
+      row :name
+
+     columns do
+       column do
+      panel "COGS by Product" do
+           ul do
+             po.cogs_by_product.each do |k,v|
+               li "#{k} - #{v.round(2)} Peruvian Nuevo Sol"
+             end
+           end
+         end
+       end
+
+       column do
+         panel "Supply for PO" do
+           ul do
+             po.materials.each do |m,v|
+               li "#{m.name}: #{v.round(4)} #{m.unit}"
+             end
+           end
+         end
+       end
+      end
+
+
+  end
+
+
+
+  end
 
   index do
     column :name
